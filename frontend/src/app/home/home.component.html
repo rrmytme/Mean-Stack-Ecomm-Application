@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <nav class="navbar row">
+      <div class="col-12 col-md-6 mt-2 mt-md-0">
+        <div class="input-group">
+          <input
+            type="text"
+            id="search_field"
+            class="form-control"
+            placeholder="Enter Product Name ..."
+            [(ngModel)]="searchText"
+            (Input)="clearSearch()"
+            (keydown.enter)="searchThroughKeys()"
+          />
+          <div class="input-group-append">
+            <button (click)="search()" id="search_btn" class="btn">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3 mt-4 mt-md-0 text-center">
+        <button class="btn" id="login_btn">Login</button>
+
+        <span id="cart" class="ml-3">Cart</span>
+        <span class="ml-1" id="cart_count">2</span>
+      </div>
+    </nav>
+
+    <h1 id="products_heading">Latest Products</h1>
+
+    <section id="products" class="container mt-5">
+      <div class="row">
+        @if (products.length > 0) {
+        <div
+          *ngFor="let product of products"
+          class="col-sm-12 col-md-6 col-lg-3 my-3"
+        >
+          <div class="card p-3 rounded">
+            <img
+              class="card-img-top mx-auto"
+              src="{{ 'assets' + product.images[0].image }}"
+            />
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <a href="">{{ product.name }}</a>
+              </h5>
+              <div class="ratings mt-auto">
+                <div class="rating-outer">
+                  <div
+                    class="rating-inner"
+                    [ngStyle]="{ width: (product.ratings / 5) * 100 + '%' }"
+                  ></div>
+                </div>
+              </div>
+              <p class="card-text">${{ product.price }}</p>
+              <a href="#" id="view_btn" class="btn btn-block">View Details</a>
+            </div>
+          </div>
+        </div>
+        } @else {
+        <div class="col-12 text-center">
+          <p>No products found.</p>
+        </div>
+        }
+      </div>
+    </section>
+
+    <footer class="py-1">
+      <p class="text-center text-dark mt-1">
+        TESTCart - 2022-2023, All Rights Reserved
+      </p>
+    </footer>
+
+    <script type="text/javascript">
+      const stars = 5;
+      const rating = 4.5;
+
+      const starPercentage = `${(rating / stars) * 100}%`;
+
+      document.querySelector(`.rating-inner`).style.width = starPercentage;
+    </script>
+  </body>
+</html>

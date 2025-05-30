@@ -10,4 +10,4 @@ const orderSchema = new mongoose.Schema({
 const orderModel = mongoose.model("Order", orderSchema);
 
 module.exports = orderModel;
-// This code defines a Mongoose schema and model for orders in a MongoDB database.
+// This code defines a Mongoose schema and model for an order in a MongoDB database.

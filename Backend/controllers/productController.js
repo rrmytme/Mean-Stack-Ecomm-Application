@@ -1,7 +1,6 @@
-const productModel = require("../models/productModel");
-// This code imports the product model from the models directory.
+const ProductModel = require("../models/productModel");
 
-// get all products api - GET /api/v1/products
+//Get Products API - /api/v1/products
 exports.getProducts = async (req, res, next) => {
   const query = req.query.keyword
     ? {
@@ -11,39 +10,25 @@ exports.getProducts = async (req, res, next) => {
         },
       }
     : {};
-  const products = await productModel.find(query);
-
+  const products = await ProductModel.find(query);
   res.json({
-    sucess: true,
-    message: "All products",
-    products: products,
-    productsCount: products.length,
+    success: true,
+    products,
   });
 };
 
-// get single product api - GET /api/v1/product/:id
+//Get Single Product API - /api/v1/product/:id
 exports.getSingleProduct = async (req, res, next) => {
   try {
-    // Assuming the product ID is passed as a URL parameter
-    const productId = req.params.id;
-    // Here you would typically fetch the product by ID from the database
-    const product = await productModel.findById(productId);
+    const product = await ProductModel.findById(req.params.id);
     res.json({
-      sucess: true,
-      message: "Product details",
-      product: product,
+      success: true,
+      product,
     });
-    if (!product) {
-      return res.status(404).json({
-        success: false,
-        message: "Product not found",
-      });
-    }
   } catch (error) {
-    return res.status(500).json({
+    res.status(404).json({
       success: false,
-      message: "Server error",
-      error: error.message,
+      message: "Unable to get Product with that ID",
     });
   }
 };
