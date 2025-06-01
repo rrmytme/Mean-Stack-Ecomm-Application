@@ -17,12 +17,22 @@ export class CartService {
     );
 
     if (prevCartItem) {
-      // to do
+      this.cartItems = this.cartItems.map((item: any) => {
+        if (item.product._id == newCartItem.product._id) {
+          item.qty += newCartItem.qty; // Update no.of quantity if item exists
+          return item;
+        }
+      });
     } else {
       this.cartItems.push(newCartItem);
     }
 
     // Update the BehaviorSubject with the new cart item
+    this.itemsSource.next(this.cartItems);
+  }
+
+  updateCartItem(items: []) {
+    this.cartItems = items;
     this.itemsSource.next(this.cartItems);
   }
 }
